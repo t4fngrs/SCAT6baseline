@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCAT6 Symptom Evaluation</title>
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.save-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+</style>
+<script>
+function setPresence(rowNum, presence) {
+  document.getElementById('presence_' + rowNum).innerText = presence;
+}
+
+function setSeverity(rowNum, severity) {
+  document.getElementById('severity_' + rowNum).innerText = severity;
+}
+
+function captureTableScreenshot() {
+  html2canvas(document.querySelector("#symptom-table")).then(canvas => {
+    var imageData = canvas.toDataURL("image/png");
+    var downloadLink = document.createElement("a");
+    downloadLink.href = imageData;
+    downloadLink.download = "symptom_evaluation_screenshot.png";
+    downloadLink.click();
+  });
+}
+</script>
+</head>
+<body>
+
+<h2>SCAT6 Symptom Evaluation</h2>
+
+<table id="symptom-table">
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>Presence (Yes/No)</th>
+      <th>Severity (0-6)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Headache</td>
+      <td id="presence_1"></td>
+      <td id="severity_1"></td>
+    </tr>
+    <tr>
+      <td>Pressure in head</td>
+      <td id="presence_2"></td>
+      <td id="severity_2"></td>
+    </tr>
+    <tr>
+      <td>Neck pain</td>
+      <td id="presence_3"></td>
+      <td id="severity_3"></td>
+    </tr>
+    <tr>
+      <td>Nausea or vomiting</td>
+      <td id="presence_4"></td>
+      <td id="severity_4"></td>
+    </tr>
+    <tr>
+      <td>Dizziness</td>
+      <td id="presence_5"></td>
+      <td id="severity_5"></td>
+    </tr>
+    <tr>
+      <td>Blurred vision</td>
+      <td id="presence_6"></td>
+      <td id="severity_6"></td>
+    </tr>
+    <tr>
+      <td>Balance problems</td>
+      <td id="presence_7"></td>
+      <td id="severity_7"></td>
+    </tr>
+    <tr>
+      <td>Sensitivity to light</td>
+      <td id="presence_8"></td>
+      <td id="severity_8"></td>
+    </tr>
+    <tr>
+      <td>Sensitivity to noise</td>
+      <td id="presence_9"></td>
+      <td id="severity_9"></td>
+    </tr>
+    <tr>
+      <td>Feeling slowed down</td>
+      <td id="presence_10"></td>
+      <td id="severity_10"></td>
+    </tr>
+    <tr>
+      <td>Feeling like in a fog</td>
+      <td id="presence_11"></td>
+      <td id="severity_11"></td>
+    </tr>
+    <tr>
+      <td>Don't feel right</td>
+      <td id="presence_12"></td>
+      <td id="severity_12"></td>
+    </tr>
+    <tr>
+      <td>Difficulty concentrating</td>
+      <td id="presence_13"></td>
+      <td id="severity_13"></td>
+    </tr>
+    <tr>
+      <td>Difficulty remembering</td>
+      <td id="presence_14"></td>
+      <td id="severity_14"></td>
+    </tr>
+    <tr>
+      <td>Fatigue or low energy</td>
+      <td id="presence_15"></td>
+      <td id="severity_15"></td>
+    </tr>
+    <tr>
+      <td>Confusion</td>
+      <td id="presence_16"></td>
+      <td id="severity_16"></td>
+    </tr>
+    <tr>
+      <td>Drowsiness</td>
+      <td id="presence_17"></td>
+      <td id="severity_17"></td>
+    </tr>
+    <tr>
+      <td>Trouble falling asleep</td>
+      <td id="presence_18"></td>
+      <td id="severity_18"></td>
+    </tr>
+    <tr>
+      <td>More emotional</td>
+      <td id="presence_19"></td>
+      <td id="severity_19"></td>
+    </tr>
+    <tr>
+      <td>Irritability</td>
+      <td id="presence_20"></td>
+      <td id="severity_20"></td>
+    </tr>
+    <tr>
+      <td>Sadness</td>
+      <td id="presence_21"></td>
+      <td id="severity_21"></td>
+    </tr>
+    <tr>
+      <td>Nervous or anxious</td>
+      <td id="presence_22"></td>
+      <td id="severity_22"></td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="save-button" onclick="captureTableScreenshot()">Save Screenshot</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var rowCount = 1;
+  document.querySelectorAll('td[id^="presence_"]').forEach(function(td) {
+    var rowNum = parseInt(td.id.split('_')[1]);
+    var yesButton = document.createElement('button');
+    yesButton.textContent = 'Yes';
+    yesButton.addEventListener('click', function() {
+      setPresence(rowNum, 'Yes');
+    });
+    var noButton = document.createElement('button');
+    noButton.textContent = 'No';
+    noButton.addEventListener('click', function() {
+      setPresence(rowNum, 'No');
+    });
+    td.appendChild(yesButton);
+    td.appendChild(noButton);
+  });
+
+  document.querySelectorAll('td[id^="severity_"]').forEach(function(td) {
+    var rowNum = parseInt(td.id.split('_')[1]);
+    for (var i = 0; i <= 6; i++) {
+      var button = document.createElement('button');
+      button.textContent = i;
+      button.addEventListener('click', (function(rowNum, i) {
+        return function() {
+          setSeverity(rowNum, i);
+        };
+      })(rowNum, i));
+      td.appendChild(button);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
